@@ -8,8 +8,10 @@ class Number:
         self.is_part_num = False
 
 class Symbol:
-    def __init__(self, position) -> None:
+    def __init__(self, position, symbol) -> None:
         self.position = position
+        self.symbol = symbol
+        self.gear_ratio = 0
 
 numbers = []
 pos2number = {}
@@ -31,7 +33,7 @@ for line_num, line in enumerate(lines):
             for position in new_number.positions:
                 pos2number[position] = new_number
         elif line[i] != '.':
-            symbols.append(Symbol((line_num, i)))
+            symbols.append(Symbol((line_num, i), line[i]))
         i += 1
 
 max_pos = 139
@@ -47,15 +49,18 @@ for symbol in symbols:
         (curr_pos[0] + 1, curr_pos[1]),
         (curr_pos[0] + 1, curr_pos[1] + 1)
     ]
+    adjacent_numbers = []
     for possible_position in possible_num_positions:
         if possible_position[0] >= 0 and possible_position[0] <= max_pos and possible_position[1] >= 0 and possible_position[1] <= max_pos:
             if possible_position in pos2number:
-                part_number = pos2number[possible_position]
-                part_number.is_part_num = True
+                if pos2number[possible_position] not in adjacent_numbers:
+                    adjacent_numbers.append(pos2number[possible_position])
+    if len(adjacent_numbers) == 2:
+        symbol.gear_ratio = adjacent_numbers[0].value * adjacent_numbers[1].value
+
 
 result = 0
-for number in numbers:
-    if number.is_part_num:
-        result += number.value
+for symbol in symbols:
+    result += symbol.gear_ratio
 
 print(result)
