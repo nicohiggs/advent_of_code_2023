@@ -53,12 +53,26 @@ class Hand:
                 hand_type = 7
             elif card_counts[card] == 4:
                 hand_type = 6
-            elif card_counts[card] == 3:
+                        
+
+            elif card_cou
+            
+            nts[card] == 3:
                 if hand_type == 2: # if we had a pair then this is a full house
+             
+              
                     hand_type = 5
-                else:
+                else
+                
+                  
+                  
+                  :
+                   
+                   
                     hand_type = 4
-            elif card_counts[card] == 2:
+            elif car d 
+            
+            _counts[card] == 2:
                 if hand_type == 4: # if we 3 of a kind then this is a full house
                     hand_type = 5
                 elif hand_type == 2: # if we had a pair then this is a second one
