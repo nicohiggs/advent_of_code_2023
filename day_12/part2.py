@@ -8,7 +8,7 @@ from functools import cache
 @cache
 def matches(springs, spring_len, records):
     if len(records) == 0:
-        if all(char in '?.' for char in springs):
+        if all(char in '?.' for char in springs): # a single '.' is always added to the end in the recursion loop
             return 1
         else:
             return 0
@@ -19,7 +19,7 @@ def matches(springs, spring_len, records):
 
     result = 0
     for prev_chars in range(spring_len - curr_dam - rem_dam + 1):
-        candidate = '.' * prev_chars + '#' * curr_dam + '.'
+        candidate = '.' * prev_chars + '#' * curr_dam + '.' # add '.' for the validity between spring damages
         if all(s == c or s=='?' for s, c in zip(springs, candidate)):
             result += matches(springs[len(candidate):],
                               spring_len - curr_dam - prev_chars - 1,
